@@ -19,9 +19,16 @@ public class MyHashTable <K, V> {
     private int M = 11;
     private int size;
 
-    public MyHashTable(){}
-    public MyHashTable(int M) {}
-    public int hash(K key){return 1;}
+    public MyHashTable(){
+        this.chainArray = new HashNode[M];
+    }
+    public MyHashTable(int M) {
+        this.chainArray = new HashNode[M];
+        this.M = M;
+    }
+    public int hash(K key){
+
+    }
     public void put(K key, V value) {}
     public V get(K key){}
     public V remote(K key){}
