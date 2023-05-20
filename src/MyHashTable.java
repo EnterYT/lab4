@@ -23,11 +23,13 @@ public class MyHashTable <K, V> {
         this.chainArray = new HashNode[M];
     }
     public MyHashTable(int M) {
-        this.chainArray = new HashNode[M];
+        this.chainArray = new HashNode[];
         this.M = M;
     }
     public int hash(K key){
-
+        int hashCode = key.hashCode();
+        int index = Math.abs(hashCode) % M;
+        return index;
     }
     public void put(K key, V value) {}
     public V get(K key){}
