@@ -85,7 +85,25 @@ public class MyHashTable <K, V> {
         }
         return null;
     }
-    public V remote(K key){}
+    public V remote(K key){
+        int index = hash(key);
+        HashNode<K, V> node = chainArray[index];
+        HashNode<K, V> prev = null;
+        while (node != null) {
+            if (key.equals(node.key)) {
+                if (prev == null) {
+                    chainArray[index] = node.next;
+                } else {
+                    prev.next = node.next;
+                }
+                size--;
+                return node.value;
+            }
+            prev = node;
+            node = node.next;
+        }
+        return null;
+    }
     public boolean contains(V value){}
     public K getKey(V value){}
 }
