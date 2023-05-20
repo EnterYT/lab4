@@ -74,7 +74,17 @@ public class MyHashTable <K, V> {
         }
         size++;
     }
-    public V get(K key){}
+    public V get(K key){
+        int index = hash(key);
+        HashNode<K, V> node = chainArray[index];
+        while (node != null) {
+            if (node.key.equals(key)) {
+                return node.value;
+            }
+            node = node.next;
+        }
+        return null;
+    }
     public V remote(K key){}
     public boolean contains(V value){}
     public K getKey(V value){}
