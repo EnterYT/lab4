@@ -49,7 +49,31 @@ public class MyHashTable <K, V> {
             }
         }
     }
-    public void put(K key, V value) {}
+    public void put(K key, V value) throws IllegalArgumentException, KeyAlreadyExistsException {
+        if (key == null || value == null) {
+            throw new IllegalArgumentException("Key or value cannot be null.");
+        }
+        if (M * 4 < size) {
+            increaseBucket();
+        }
+        int index = hash(key);
+        HashNode<K, V> node = chainArray[index];
+        HashNode<K, V> prev = null;
+        if (node == null){
+            chainArray[index] = new HashNode<>(key, value);
+        } else {
+            while (node != null) {
+                if (node.key.equals(key)) {
+                    node.value = value;
+                    return;
+                }
+                prev = node;
+                node = node.next;
+            }
+            prev.next = new HashNode<>(key, value);
+        }
+        size++;
+    }
     public V get(K key){}
     public V remote(K key){}
     public boolean contains(V value){}
