@@ -1,6 +1,6 @@
 # lab4
 ## MyHashTable Class 
-* ```java
+```java
 public class MyHashTable<K, V>{
 
     private class HashNode<K, V> {
