@@ -104,6 +104,20 @@ public class MyHashTable <K, V> {
         }
         return null;
     }
-    public boolean contains(V value){}
+    public boolean contains(V value) throws NullPointerException{
+        if (value == null) {
+            throw new NullPointerException("Value cannot be null.");
+        }
+        for (int i = 0; i < M; i++) {
+            HashNode<K, V> node = chainArray[i];
+            while (node != null) {
+                if (node.value.equals(value)) {
+                    return true;
+                }
+                node = node.next;
+            }
+        }
+        return false;
+    }
     public K getKey(V value){}
 }
