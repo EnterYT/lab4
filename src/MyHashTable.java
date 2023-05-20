@@ -1,3 +1,5 @@
+import javax.management.openmbean.KeyAlreadyExistsException;
+
 public class MyHashTable <K, V> {
     private class HashNode<K, V>{
         private K key;
@@ -30,6 +32,22 @@ public class MyHashTable <K, V> {
         int hashCode = key.hashCode();
         int index = Math.abs(hashCode) % M;
         return index;
+    }
+    public void increaseBucket() throws KeyAlreadyExistsException{
+        int prevM = M;
+        M = M * 2;
+        size = 0;
+        HashNode<K, V>[] prevChainArray = chainArray;
+        chainArray = new HashNode[M];
+        for (int i = 0; i < prevM; i++) {
+            HashNode<K, V> node = prevChainArray[i];
+            while (node != null) {
+                HashNode<K, V> next = node.next;
+                node.next = null;
+                put(node.key, node.value);
+                node = next;
+            }
+        }
     }
     public void put(K key, V value) {}
     public V get(K key){}
