@@ -33,28 +33,12 @@ public class MyHashTable <K, V> {
         int index = Math.abs(hashCode) % M;
         return index;
     }
-    public void increaseBucket() throws KeyAlreadyExistsException{
-        int prevM = M;
-        M = M * 2;
-        size = 0;
-        HashNode<K, V>[] prevChainArray = chainArray;
-        chainArray = new HashNode[M];
-        for (int i = 0; i < prevM; i++) {
-            HashNode<K, V> node = prevChainArray[i];
-            while (node != null) {
-                HashNode<K, V> next = node.next;
-                node.next = null;
-                put(node.key, node.value);
-                node = next;
-            }
-        }
-    }
     public void put(K key, V value) throws IllegalArgumentException, KeyAlreadyExistsException {
         if (key == null || value == null) {
             throw new IllegalArgumentException("Key or value cannot be null.");
         }
         if (M * 4 < size) {
-            increaseBucket();
+            resize();
         }
         int index = hash(key);
         HashNode<K, V> node = chainArray[index];
@@ -144,5 +128,21 @@ public class MyHashTable <K, V> {
             System.out.println("Bucket: "+ i + ", Elements: "+ elements);
         }
         System.out.println("All: " + all);
+    }
+    public void resize(){
+        int prevM = M;
+        M = M * 2;
+        size = 0;
+        HashNode<K, V>[] prevChainArray = chainArray;
+        chainArray = new HashNode[M];
+        for (int i = 0; i < prevM; i++) {
+            HashNode<K, V> node = prevChainArray[i];
+            while (node != null) {
+                HashNode<K, V> next = node.next;
+                node.next = null;
+                put(node.key, node.value);
+                node = next;
+            }
+        }
     }
 }
